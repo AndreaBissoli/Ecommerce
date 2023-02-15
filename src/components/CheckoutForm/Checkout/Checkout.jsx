@@ -4,7 +4,7 @@ import { Paper, Stepper, Step, StepLabel, Typography, CircularProgress, Divider,
 
 import {commerce} from '../../../lib/commerce';
 
-import {Link, useHistory} from 'react-router-dom';
+import {Link } from 'react-router-dom';
 
 import useStyles from './styles';
 import AddressForm from '../AddressForm';
@@ -17,7 +17,6 @@ const Checkout = ({cart, order, onCaptureCheckout, error}) => {
     const [checkoutToken, setCheckoutToken] = useState(null);
     const [shippingData, setShippingData] = useState({});
     const {classes} = useStyles();
-    const history = useHistory();
 
     useEffect(() => {
         const generateToken = async () => {
@@ -25,7 +24,7 @@ const Checkout = ({cart, order, onCaptureCheckout, error}) => {
                 const token = await commerce.checkout.generateToken(cart.id, {type: 'cart'});
                 setCheckoutToken(token);
             } catch (error) {
-                history.pushState('/');
+                console.log(error);
             }
         }
         generateToken();
