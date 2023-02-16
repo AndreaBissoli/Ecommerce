@@ -22,6 +22,7 @@ const Checkout = ({cart, order, onCaptureCheckout, error}) => {
         const generateToken = async () => {
             try {
                 const token = await commerce.checkout.generateToken(cart.id, {type: 'cart'});
+                console.log(token)
                 setCheckoutToken(token);
             } catch (error) {
                 console.log(error);
@@ -63,6 +64,8 @@ const Checkout = ({cart, order, onCaptureCheckout, error}) => {
 
     const next = (data) => {
         setShippingData(data);
+        console.log("Hi")
+        console.log(shippingData);
         nextStep();
     }
 

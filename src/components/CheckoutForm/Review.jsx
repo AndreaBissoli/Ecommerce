@@ -1,7 +1,10 @@
 import React from 'react';
 import { Typography, List, ListItem, ListItemText } from '@mui/material';
 
-const Review = ({ checkoutToken }) => (
+
+const Review = ({ checkoutToken, shippingData, subtotal }) => {
+
+    return (
     <>
         <Typography variant="h6" gutterBottom>Order summary</Typography>
         <List disablePadding>
@@ -12,13 +15,21 @@ const Review = ({ checkoutToken }) => (
                 </ListItem>
             ))}
             <ListItem style={{ padding: '10px 0' }}>
+                <ListItemText primary="Shipping" />
+                <Typography variant="subtitle1" style={{ fontWeight: 700 }}>
+                {checkoutToken.shipping_methods.filter((method) => (method.id === shippingData.shippingOption))[0].price.formatted_with_symbol}
+                </Typography>
+            </ListItem>
+            <ListItem style={{ padding: '10px 0' }}>
                 <ListItemText primary="Total" />
                 <Typography variant="subtitle1" style={{ fontWeight: 700 }}>
-                {checkoutToken.subtotal.formatted_with_symbol}
+                {"€"+subtotal.toFixed(2)}
                 </Typography>
             </ListItem>
         </List>
     </>
-);
+
+    )
+};
 
 export default Review;

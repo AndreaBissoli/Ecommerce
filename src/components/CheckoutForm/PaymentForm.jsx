@@ -37,9 +37,13 @@ const PaymentForm = ({shippingData, checkoutToken, nextStep, backStep, onCapture
         }
     }
 
+    const shippingPrice = checkoutToken.shipping_methods.filter((method) => (method.id === shippingData.shippingOption))[0].price.raw;
+    const itemsTotal = checkoutToken.subtotal.raw;
+    const subtotal = shippingPrice + itemsTotal
+
     return (
         <>
-            <Review checkoutToken={checkoutToken}/>
+            <Review checkoutToken={checkoutToken} shippingData={shippingData} subtotal={subtotal}/>
             <Divider />
             <Typography variant="h6" gutterBottom style={{margin: '20px 0'}}>Payment method</Typography>
             <Elements stripe={stripePromise}>
@@ -51,7 +55,7 @@ const PaymentForm = ({shippingData, checkoutToken, nextStep, backStep, onCapture
                             <div style={{display: 'flex', justifyContent: 'space-between'}}>
                                 <Button variant="outlined" onClick={backStep}>Back</Button>
                                 <Button type="submit" variant="contained" disabled={!stripe} color="primary">
-                                    Pay {checkoutToken.subtotal.formatted_with_symbol}
+                                    Pay {"€"+subtotal.toFixed(2)}
                                 </Button>
                             </div>
                         </form>
